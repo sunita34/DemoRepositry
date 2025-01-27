@@ -1,0 +1,32 @@
+Table 1 : orders (order_id, product_id, customer_id, order_timestamp, order_amount)
+Table 2 : product_master(product_id, product_name, product_category)
+
+Queries to write,
+1> Query to get total count of unique customers who have purchased product category 'smart phones'
+
+select count(distict o.customer_id) as unique_customers
+from orders o 
+join product_master pm 
+on o. product_id = pm.product_id 
+where pm.product_category = ' smart phones';
+
+
+
+2> Query to get customer wise total count of orders and total transaction amount
+
+select o.customer_id, 
+count(o.order_id) as total_orders,
+sum(o.order_amount) as total_transction_amount 
+from orders o 
+group by o.customer_id;
+
+
+3> Query to get top 5 product categories by total transaction amount
+
+  select pm.product_category,
+  sum(o.orders _amount) as total_transction_amount
+  from orders o 
+  join product_master pm 
+  on pm.product_id = o.product_id 
+ group by pm.product_category
+ order by total_transction_amount desc limit 5;
